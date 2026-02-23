@@ -1,0 +1,31 @@
+---
+type: content
+notes: |
+  A demo of area charts.
+  Suitable for visualizing cumulative changes.
+---
+
+<div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+
+# Area Chart
+
+Server response time (ms):
+
+<Chart
+  type="area"
+  data={[
+    { name: "00:00", value: 45 },
+    { name: "04:00", value: 32 },
+    { name: "08:00", value: 78 },
+    { name: "12:00", value: 120 },
+    { name: "16:00", value: 95 },
+    { name: "20:00", value: 68 },
+    { name: "24:00", value: 42 },
+  ]}
+  xKey="name"
+  yKey="value"
+  height={480}
+  colors={["#02001A", "#888", "#CCC", "#555", "#AAA", "#DC3545"]}
+/>
+
+</div>

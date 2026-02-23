@@ -1,0 +1,29 @@
+---
+type: content
+notes: |
+  A demo of pie charts.
+  Suitable for visualizing proportions.
+---
+
+<div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+
+# Pie Chart
+
+Tech stack usage ratio:
+
+<Chart
+  type="pie"
+  data={[
+    { name: "TypeScript", value: 40 },
+    { name: "Python", value: 25 },
+    { name: "Go", value: 15 },
+    { name: "Rust", value: 12 },
+    { name: "Other", value: 8 },
+  ]}
+  xKey="name"
+  yKey="value"
+  height={500}
+  colors={["#02001A", "#888", "#CCC", "#555", "#AAA", "#DC3545"]}
+/>
+
+</div>

@@ -1,0 +1,53 @@
+---
+type: content
+notes: |
+  A pattern for displaying code blocks in multiple languages side by side.
+  Useful for language comparisons and polyglot explanations.
+---
+
+# Multi-Language Code Comparison
+
+<Columns gap="2.5rem">
+  <Column>
+
+  ### TypeScript
+
+```typescript
+interface User {
+  id: string;
+  name: string;
+}
+
+const getUser = async (
+  id: string
+): Promise<User> => {
+  const res = await fetch(
+    `/api/${id}`
+  );
+  return res.json();
+};
+```
+
+  </Column>
+  <Column>
+
+  ### Go
+
+```go
+type User struct {
+    ID   string `json:"id"`
+    Name string `json:"name"`
+}
+
+func GetUser(
+    id string,
+) (*User, error) {
+    resp, err := http.Get(
+        "/api/" + id,
+    )
+    // handle resp...
+}
+```
+
+  </Column>
+</Columns>

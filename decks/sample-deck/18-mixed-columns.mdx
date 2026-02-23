@@ -1,0 +1,40 @@
+---
+type: content
+notes: |
+  A pattern for placing text and charts side by side.
+  Show data explanations and visualizations together.
+---
+
+# Revenue Report
+
+<Columns gap="3rem">
+  <Column>
+
+  ## FY2025 Results
+
+  Achieved **+32%** growth year-over-year.
+
+  - Q1: Strong new customer acquisition
+  - Q2: Improved subscription conversion rate
+  - Q3: Expansion into international markets
+  - Q4: Year-end campaign impact
+
+  </Column>
+  <Column>
+
+  <Chart
+    type="bar"
+    data={[
+      { name: "Q1", value: 1200 },
+      { name: "Q2", value: 1800 },
+      { name: "Q3", value: 2100 },
+      { name: "Q4", value: 2800 },
+    ]}
+    xKey="name"
+    yKey="value"
+    height={420}
+    colors={["#02001A", "#888", "#CCC", "#555", "#AAA", "#DC3545"]}
+  />
+
+  </Column>
+</Columns>

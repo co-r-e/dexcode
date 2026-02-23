@@ -1,0 +1,40 @@
+---
+type: content
+notes: |
+  A pattern using shapes as decorative elements.
+  Enables visualization of flow diagrams and processes.
+---
+
+# Process Flow
+
+<div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "2rem", height: "100%", flex: 1 }}>
+  <div style={{ textAlign: "center" }}>
+    <Shape type="circle" size={120} fill="#02001A" />
+    <p style={{ fontSize: "1.8rem", marginTop: "1rem", fontWeight: "bold", color: "#02001A" }}>Plan</p>
+    <p style={{ fontSize: "1.4rem", color: "#555", marginTop: "0.3rem" }}>Requirements</p>
+  </div>
+  <Shape type="arrow" size={100} fill="#CCC" />
+  <div style={{ textAlign: "center" }}>
+    <Shape type="circle" size={120} fill="#333" />
+    <p style={{ fontSize: "1.8rem", marginTop: "1rem", fontWeight: "bold", color: "#02001A" }}>Design</p>
+    <p style={{ fontSize: "1.4rem", color: "#555", marginTop: "0.3rem" }}>Architecture</p>
+  </div>
+  <Shape type="arrow" size={100} fill="#CCC" />
+  <div style={{ textAlign: "center" }}>
+    <Shape type="circle" size={120} fill="#555" />
+    <p style={{ fontSize: "1.8rem", marginTop: "1rem", fontWeight: "bold", color: "#02001A" }}>Develop</p>
+    <p style={{ fontSize: "1.4rem", color: "#555", marginTop: "0.3rem" }}>Implement & Review</p>
+  </div>
+  <Shape type="arrow" size={100} fill="#CCC" />
+  <div style={{ textAlign: "center" }}>
+    <Shape type="circle" size={120} fill="#888" />
+    <p style={{ fontSize: "1.8rem", marginTop: "1rem", fontWeight: "bold", color: "#02001A" }}>Test</p>
+    <p style={{ fontSize: "1.4rem", color: "#555", marginTop: "0.3rem" }}>QA & Verify</p>
+  </div>
+  <Shape type="arrow" size={100} fill="#CCC" />
+  <div style={{ textAlign: "center" }}>
+    <Shape type="circle" size={120} fill="#CCC" />
+    <p style={{ fontSize: "1.8rem", marginTop: "1rem", fontWeight: "bold", color: "#02001A" }}>Release</p>
+    <p style={{ fontSize: "1.4rem", color: "#555", marginTop: "0.3rem" }}>Deploy & Monitor</p>
+  </div>
+</div>

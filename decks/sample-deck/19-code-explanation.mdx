@@ -1,0 +1,39 @@
+---
+type: content
+notes: |
+  A pattern for placing code and explanation side by side.
+  Ideal for live coding and tutorials.
+---
+
+# Code + Explanation
+
+<Columns gap="3rem">
+  <Column>
+
+```typescript
+async function fetchUser(
+  id: string
+) {
+  const res = await fetch(
+    `/api/users/${id}`
+  );
+  if (!res.ok) {
+    throw new Error("Not found");
+  }
+  return res.json();
+}
+```
+
+  </Column>
+  <Column>
+
+  ## Key Points
+
+  1. `async/await` for async operations
+  2. Template literals for URL construction
+  3. `res.ok` for status checking
+  4. Throws an exception on error
+  5. Parses JSON on success
+
+  </Column>
+</Columns>

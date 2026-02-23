@@ -1,0 +1,39 @@
+---
+type: content
+notes: |
+  A pattern for creating custom-ratio layouts by specifying width on Column.
+  Enables sidebar + main content arrangements.
+---
+
+# Custom Width Columns
+
+<Columns gap="2.5rem">
+  <Column width="30%">
+
+  ## Table of Contents
+
+  1. Overview
+  2. Architecture
+  3. Implementation
+  4. Test Strategy
+  5. Deployment
+  6. Summary
+
+  </Column>
+  <Column width="70%">
+
+  ## Architecture
+
+  This system uses a **microservice architecture**.
+
+  | Service | Role | Tech |
+  |----------|------|------|
+  | Gateway | API Routing | Go |
+  | Auth | Auth | Go |
+  | Frontend | Web UI | Next.js |
+  | Worker | Async Processing | Python |
+
+  > Each service is independently deployable and communicates via gRPC.
+
+  </Column>
+</Columns>
