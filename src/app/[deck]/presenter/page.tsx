@@ -2,11 +2,27 @@ import { loadDeck } from "@/lib/deck-loader";
 import { PresenterView } from "@/components/presenter/PresenterView";
 import { getTunnelAccess } from "@/lib/tunnel-access";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
 
 interface PresenterPageProps {
   params: Promise<{ deck: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: PresenterPageProps): Promise<Metadata> {
+  const { deck: deckName } = await params;
+  try {
+    const deck = await loadDeck(deckName);
+    return {
+      title: `${deck.config.title} — Presenter`,
+      description: `Presenter view for ${deck.config.title}`,
+    };
+  } catch {
+    return { title: deckName };
+  }
 }
 
 export default async function PresenterPage({ params }: PresenterPageProps) {

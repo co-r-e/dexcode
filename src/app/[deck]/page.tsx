@@ -2,11 +2,27 @@ import { loadDeck } from "@/lib/deck-loader";
 import { SlideViewer } from "@/components/viewer/SlideViewer";
 import { getTunnelAccess } from "@/lib/tunnel-access";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
 
 interface DeckPageProps {
   params: Promise<{ deck: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: DeckPageProps): Promise<Metadata> {
+  const { deck: deckName } = await params;
+  try {
+    const deck = await loadDeck(deckName);
+    return {
+      title: deck.config.title,
+      description: `${deck.config.title} — ${deck.slides.length} slides`,
+    };
+  } catch {
+    return { title: deckName };
+  }
 }
 
 export default async function DeckPage({ params }: DeckPageProps) {

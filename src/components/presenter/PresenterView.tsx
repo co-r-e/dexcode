@@ -6,7 +6,6 @@ import { resolveSlideBackground, buildScaledSlideStyle } from "@/lib/slide-utils
 import { SlideFrame } from "@/components/slide/SlideFrame";
 import { useDeckNavigation } from "@/hooks/useDeckNavigation";
 import { useSlideScale } from "@/hooks/useSlideScale";
-import presenterStyles from "./PresenterView.module.css";
 
 interface PresenterViewProps {
   deck: Deck;
@@ -57,7 +56,7 @@ export function PresenterView({ deck }: PresenterViewProps): React.JSX.Element |
   return (
     <div
       ref={containerRef}
-      className={`h-screen w-screen bg-black overflow-hidden ${presenterStyles.container}`}
+      className="h-screen w-screen bg-black overflow-hidden"
     >
       <div className="flex h-screen w-screen items-center justify-center">
         <div style={buildScaledSlideStyle(scale, bg)}>

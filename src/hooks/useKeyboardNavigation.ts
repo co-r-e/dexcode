@@ -9,6 +9,7 @@ interface UseKeyboardNavigationOptions {
   onLast: () => void;
   onEscape?: () => void;
   onFullscreen?: () => void;
+  onHelp?: () => void;
   enabled?: boolean;
 }
 
@@ -19,6 +20,7 @@ export function useKeyboardNavigation({
   onLast,
   onEscape,
   onFullscreen,
+  onHelp,
   enabled = true,
 }: UseKeyboardNavigationOptions) {
   const handleKeyDown = useCallback(
@@ -74,9 +76,13 @@ export function useKeyboardNavigation({
             onFullscreen?.();
           }
           break;
+        case "?":
+          e.preventDefault();
+          onHelp?.();
+          break;
       }
     },
-    [enabled, onNext, onPrevious, onFirst, onLast, onEscape, onFullscreen],
+    [enabled, onNext, onPrevious, onFirst, onLast, onEscape, onFullscreen, onHelp],
   );
 
   useEffect(() => {

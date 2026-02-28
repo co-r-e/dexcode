@@ -12,6 +12,8 @@ interface UseDeckNavigationOptions {
   keyboard?: {
     onEscape?: () => void;
     onFullscreen?: () => void;
+    onHelp?: () => void;
+    enabled?: boolean;
   };
 }
 
@@ -58,6 +60,8 @@ export function useDeckNavigation({
     onLast: () => handleNavigate(totalSlides - 1),
     onEscape: keyboard?.onEscape,
     onFullscreen: keyboard?.onFullscreen,
+    onHelp: keyboard?.onHelp,
+    enabled: keyboard?.enabled,
   });
 
   return { currentSlide, handleNavigate };

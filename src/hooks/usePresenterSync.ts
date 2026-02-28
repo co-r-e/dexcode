@@ -31,7 +31,12 @@ export function usePresenterSync({
   }, [currentSlide, totalSlides, onNavigate, role]);
 
   useEffect(() => {
-    const channel = new BroadcastChannel(`nipry-presenter-${deckName}`);
+    let channel: BroadcastChannel;
+    try {
+      channel = new BroadcastChannel(`nipry-presenter-${deckName}`);
+    } catch {
+      return;
+    }
     channelRef.current = channel;
 
     channel.onmessage = (event: MessageEvent<PresenterMessage>) => {

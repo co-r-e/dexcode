@@ -33,6 +33,7 @@ export function Sidebar({
           {isLocal && (
             <Link
               href="/"
+              aria-label="Back to deck list"
               className="flex items-center justify-center rounded-lg border border-gray-200 px-2 py-2 transition-colors hover:bg-gray-100"
             >
               <ArrowLeft size={14} className="text-gray-600" />

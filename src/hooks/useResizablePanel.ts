@@ -101,8 +101,36 @@ export function useResizablePanel() {
     dragCleanupRef.current = cleanup;
   }, []);
 
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    if (!touch) return;
+
+    const startX = touch.clientX;
+    const startWidth = stateRef.current.width;
+
+    const onTouchMove = (ev: TouchEvent) => {
+      ev.preventDefault();
+      const t = ev.touches[0];
+      if (!t) return;
+      const newWidth = clampWidth(startWidth + (startX - t.clientX));
+      setState((prev) => ({ ...prev, width: newWidth }));
+    };
+
+    const cleanup = () => {
+      document.removeEventListener("touchmove", onTouchMove);
+      document.removeEventListener("touchend", cleanup);
+      document.removeEventListener("touchcancel", cleanup);
+      dragCleanupRef.current = null;
+    };
+
+    document.addEventListener("touchmove", onTouchMove, { passive: false });
+    document.addEventListener("touchend", cleanup);
+    document.addEventListener("touchcancel", cleanup);
+    dragCleanupRef.current = cleanup;
+  }, []);
+
   // Stable object reference — avoids re-rendering NotesPanel on every frame during drag
-  const resizeHandleProps = useMemo(() => ({ onMouseDown }), [onMouseDown]);
+  const resizeHandleProps = useMemo(() => ({ onMouseDown, onTouchStart }), [onMouseDown, onTouchStart]);
 
   return {
     width: state.width,

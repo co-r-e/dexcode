@@ -17,6 +17,7 @@ import { useDeckNavigation } from "@/hooks/useDeckNavigation";
 import { useSlideScale } from "@/hooks/useSlideScale";
 import { useResizablePanel } from "@/hooks/useResizablePanel";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { KeyboardHelp } from "@/components/ui/KeyboardHelp";
 
 interface SlideViewerProps {
   deck: Deck;
@@ -167,10 +168,17 @@ export function SlideViewer({ deck }: SlideViewerProps): React.JSX.Element | nul
   const { containerRef, scale } = useSlideScale({ padding: 64 });
   const { width, isOpen, toggle, resizeHandleProps } = useResizablePanel();
 
+  const [showHelp, setShowHelp] = useState(false);
+  const handleShowHelp = useCallback(() => setShowHelp(true), []);
+
   const { currentSlide, handleNavigate } = useDeckNavigation({
     deckName: deck.name,
     totalSlides: deck.slides.length,
     role: "viewer",
+    keyboard: {
+      onHelp: handleShowHelp,
+      enabled: !showHelp,
+    },
   });
 
   const handlePresenterMode = useCallback(() => {
@@ -220,6 +228,12 @@ export function SlideViewer({ deck }: SlideViewerProps): React.JSX.Element | nul
             <PanelRight size={18} />
           </button>
         )}
+
+        {!isOpen && (
+          <div className="absolute bottom-3 right-3 rounded bg-black/50 px-2 py-1 text-xs text-white tabular-nums backdrop-blur">
+            {currentSlide + 1} / {deck.slides.length}
+          </div>
+        )}
       </main>
 
       <NotesPanel
@@ -229,6 +243,8 @@ export function SlideViewer({ deck }: SlideViewerProps): React.JSX.Element | nul
         onToggle={toggle}
         resizeHandleProps={resizeHandleProps}
       />
+
+      <KeyboardHelp open={showHelp} onClose={() => setShowHelp(false)} />
     </div>
   );
 }

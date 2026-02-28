@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 
 interface UseSlideNavigationOptions {
   totalSlides: number;
@@ -19,9 +19,9 @@ function getInitialSlide(totalSlides: number): number {
   if (slide === null) return 0;
 
   const parsed = parseInt(slide, 10);
-  if (isNaN(parsed) || parsed < 0) return 0;
+  if (isNaN(parsed) || parsed < 1) return 0;
 
-  return clampIndex(parsed, totalSlides);
+  return clampIndex(parsed - 1, totalSlides);
 }
 
 export function useSlideNavigation({
@@ -39,10 +39,35 @@ export function useSlideNavigation({
       currentSlideRef.current = clamped;
       setCurrentSlide(clamped);
       onSlideChange?.(clamped);
+
+      const url = new URL(window.location.href);
+      if (clamped === 0) {
+        url.searchParams.delete("slide");
+      } else {
+        url.searchParams.set("slide", String(clamped + 1));
+      }
+      history.replaceState(null, "", url);
+
       return clamped;
     },
     [totalSlides, onSlideChange],
   );
+
+  useEffect(() => {
+    const onPopState = () => {
+      const slide = new URLSearchParams(window.location.search).get("slide");
+      const parsed = slide === null ? 0 : parseInt(slide, 10);
+      const clamped = clampIndex(
+        isNaN(parsed) || parsed < 1 ? 0 : parsed - 1,
+        totalSlides,
+      );
+      currentSlideRef.current = clamped;
+      setCurrentSlide(clamped);
+      onSlideChange?.(clamped);
+    };
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, [totalSlides, onSlideChange]);
 
   const next = useCallback((): number => {
     return goTo(currentSlideRef.current + 1);

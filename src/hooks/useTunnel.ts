@@ -72,17 +72,28 @@ export function useTunnel(deckName?: string): UseTunnelReturn {
     });
   }, [applyServerState]);
 
-  // Poll while connecting or active
+  // Poll while connecting or active (sequential to avoid overlap)
   useEffect(() => {
     const { phase } = state;
     if (phase !== "connecting" && phase !== "active") return;
 
-    const id = setInterval(async () => {
-      const data = await fetchTunnelState();
-      if (data) applyServerState(data);
-    }, POLL_INTERVAL);
+    let cancelled = false;
 
-    return () => clearInterval(id);
+    async function poll() {
+      while (!cancelled) {
+        await new Promise((r) => setTimeout(r, POLL_INTERVAL));
+        if (cancelled) break;
+        const data = await fetchTunnelState();
+        if (cancelled) break;
+        if (data) applyServerState(data);
+      }
+    }
+
+    poll();
+
+    return () => {
+      cancelled = true;
+    };
   }, [state.phase, applyServerState]);
 
   // Auto-reset error after a short delay
@@ -124,7 +135,7 @@ export function useTunnel(deckName?: string): UseTunnelReturn {
 
   const copyUrl = useCallback(() => {
     if (!state.url) return;
-    navigator.clipboard.writeText(state.url).then(() => setCopied(true));
+    navigator.clipboard.writeText(state.url).then(() => setCopied(true)).catch(() => {});
   }, [state.url]);
 
   return {
