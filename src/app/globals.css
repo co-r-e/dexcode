@@ -43,7 +43,8 @@ pre code {
 
 /* ── KaTeX block math: use slide spacing instead of default 1em ── */
 [data-mdx-status] .katex-display {
-  margin: var(--slide-space-sm) 0;
+  margin: var(--slide-space-md, 24px) 0;
+  padding: 0.5em 0;
 }
 
 /* ── Growable elements fill remaining space in flex-col containers ── */
@@ -51,6 +52,11 @@ pre code {
 [data-column] > [data-growable] {
   flex: 1;
   min-height: 0;
+}
+
+/* Vertically center MDX content when the slide opts in */
+[data-vertical-align="center"] > [data-mdx-status] {
+  justify-content: center;
 }
 
 /* Column: flex-col, natural height + consistent gap */

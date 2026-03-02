@@ -9,7 +9,6 @@ import styles from "./SlideContent.module.css";
 const SELF_CENTERED_TYPES: ReadonlySet<SlideType> = new Set([
   "cover",
   "ending",
-  "section",
   "quote",
   "image-full",
 ]);

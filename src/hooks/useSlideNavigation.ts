@@ -12,9 +12,7 @@ function clampIndex(index: number, totalSlides: number): number {
   return Math.max(0, Math.min(totalSlides - 1, index));
 }
 
-function getInitialSlide(totalSlides: number): number {
-  if (typeof window === "undefined") return 0;
-
+function parseSlideParam(totalSlides: number): number {
   const slide = new URLSearchParams(window.location.search).get("slide");
   if (slide === null) return 0;
 
@@ -28,17 +26,18 @@ export function useSlideNavigation({
   totalSlides,
   onSlideChange,
 }: UseSlideNavigationOptions) {
-  const [currentSlide, setCurrentSlide] = useState(() =>
-    getInitialSlide(totalSlides),
-  );
-  const currentSlideRef = useRef(currentSlide);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const currentSlideRef = useRef(0);
+  const onSlideChangeRef = useRef(onSlideChange);
+  onSlideChangeRef.current = onSlideChange;
 
-  // Clamp currentSlide when totalSlides changes (e.g. hot reload removes slides)
+  // Sync with URL ?slide= param after hydration, and clamp on totalSlides change
   useEffect(() => {
-    const clamped = clampIndex(currentSlideRef.current, totalSlides);
-    if (clamped !== currentSlideRef.current) {
-      currentSlideRef.current = clamped;
-      setCurrentSlide(clamped);
+    const target = parseSlideParam(totalSlides);
+    if (target !== currentSlideRef.current) {
+      currentSlideRef.current = target;
+      setCurrentSlide(target);
+      onSlideChangeRef.current?.(target);
     }
   }, [totalSlides]);
 
@@ -47,7 +46,7 @@ export function useSlideNavigation({
       const clamped = clampIndex(index, totalSlides);
       currentSlideRef.current = clamped;
       setCurrentSlide(clamped);
-      onSlideChange?.(clamped);
+      onSlideChangeRef.current?.(clamped);
 
       const url = new URL(window.location.href);
       if (clamped === 0) {
@@ -59,7 +58,7 @@ export function useSlideNavigation({
 
       return clamped;
     },
-    [totalSlides, onSlideChange],
+    [totalSlides],
   );
 
   useEffect(() => {
@@ -72,11 +71,11 @@ export function useSlideNavigation({
       );
       currentSlideRef.current = clamped;
       setCurrentSlide(clamped);
-      onSlideChange?.(clamped);
+      onSlideChangeRef.current?.(clamped);
     };
     window.addEventListener("popstate", onPopState);
     return () => window.removeEventListener("popstate", onPopState);
-  }, [totalSlides, onSlideChange]);
+  }, [totalSlides]);
 
   const next = useCallback((): number => {
     return goTo(currentSlideRef.current + 1);

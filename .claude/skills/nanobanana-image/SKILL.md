@@ -20,7 +20,6 @@ A skill that generates images for slides using Gemini API and inserts them into 
 ## Prerequisites
 
 - The `GEMINI_API_KEY` environment variable must be set (write it in `.env.local` at the project root and the script will auto-load it)
-- The `@google/genai` package must be installed (if not, install with `npm install --no-save @google/genai`)
 
 ## Workflow
 
@@ -93,6 +92,7 @@ Convert the user's description into a prompt suitable for Gemini image generatio
 - **Write in English** (Gemini produces best quality with English prompts)
 - **Add specific descriptions**: Composition, lighting, style, color tone
 - **Consider slide usage**: Space for text overlay, high contrast, simple background
+- **No title/heading text in the image** unless the user explicitly requests it. The slide already has its own heading in MDX.
 - Present the prompt to the user for confirmation
 
 ### Step 3: Image Generation
@@ -105,12 +105,6 @@ npx tsx .claude/skills/nanobanana-image/scripts/generate-image.ts \
   --output "decks/<deck>/assets/<filename>.png" \
   --aspect-ratio <ratio> \
   --resolution <resolution>
-```
-
-If `@google/genai` is not installed, install it first:
-
-```bash
-npm install --no-save @google/genai
 ```
 
 ### Step 4: Insert into MDX

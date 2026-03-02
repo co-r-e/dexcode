@@ -18,14 +18,6 @@ cp .env.example .env.local
 
 `.env.local` is included in `.gitignore`, so the key will never be committed to the repository.
 
-### 3. Install Dependencies
-
-```bash
-npm install --no-save @google/genai
-```
-
-`--no-save` ensures `package.json` is not modified.
-
 ## Usage
 
 Invoke in Claude Code as follows:

@@ -9,6 +9,7 @@ interface SlideOverlayProps {
   currentPage: number;
   slideType: SlideType;
   deckName: string;
+  darkBackground?: boolean;
 }
 
 const positionClasses: Record<LogoPosition, string> = {
@@ -34,6 +35,7 @@ export function SlideOverlay({
   currentPage,
   slideType,
   deckName,
+  darkBackground,
 }: SlideOverlayProps): React.JSX.Element {
   const { logo, copyright, pageNumber } = config;
   const isCover = slideType === "cover" || slideType === "ending";
@@ -49,6 +51,7 @@ export function SlideOverlay({
             src={resolveAssetPath(logo.src, deckName)}
             alt="Logo"
             className={styles.logoImage}
+            style={darkBackground ? { filter: "brightness(0) invert(1)" } : undefined}
           />
         </div>
       )}

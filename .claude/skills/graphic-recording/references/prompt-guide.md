@@ -5,18 +5,22 @@
 Use this template as a base. Fill in slide content and theme colors. Prompts must be written in English.
 
 ```
-Create a graphic recording / visual note illustration that summarizes the following content.
+Create a structured visual summary illustration that summarizes the following content.
 
 ## Style Requirements
-- Hand-drawn sketch style with clean, readable strokes
+- Clean, structured infographic style — NOT loose hand-drawn sketches
+- Use geometric shapes (rectangles, rounded boxes, circles) with crisp edges
+- Grid-aligned layout with clear sections and logical reading order (left-to-right or top-to-bottom)
 - White or very light background (use {background_color} tinted toward white)
-- Bold section headers in {primary_color}
+- Bold section headers in {primary_color} with strong typographic hierarchy
 - Accent highlights, arrows, and connectors in {accent_color}
 - Body text and labels in {text_color}
-- Filled highlight boxes and banners using {surface_color}
-- Mix of text keywords, simple icons, stick figures, speech bubbles, and connecting arrows
-- Layout: organic, non-linear arrangement with visual hierarchy (largest = most important)
+- Section boxes and card backgrounds using {surface_color}
+- Minimal decoration: no ribbons, badges, starburst shapes, or ornamental flourishes
+- Icons should be original, slightly illustrative line-art (uniform stroke weight, not generic stock icons). Each icon should feel unique to the content rather than a standard template icon. Use 1-2 colors (primary + accent) for icons.
+- Keep generous whitespace between sections for readability
 - No decorative borders or frames around the entire image
+- Do NOT include a title or heading text in the image unless the user explicitly requests it. The slide already has its own heading in MDX.
 - All text must be in Japanese
 
 ## Content to Visualize
@@ -52,17 +56,18 @@ Extract the following from slide content and include in the prompt:
 ### Input: Survey Release Process Slide
 
 ```
-Create a graphic recording / visual note illustration that summarizes the following content.
+Create a structured visual summary illustration that summarizes the following content.
 
 ## Style Requirements
-- Hand-drawn sketch style with clean, readable strokes
+- Clean, structured infographic style with crisp geometric shapes
+- Grid-aligned layout with clear sections and logical left-to-right reading order
 - White background
 - Bold section headers in #02001A (dark navy)
 - Accent highlights, arrows, and connectors in #DC3545 (red)
 - Body text and labels in #1a1a1a
-- Filled highlight boxes using #F5F6FA (light gray)
-- Mix of text keywords, simple icons, stick figures, speech bubbles, and connecting arrows
-- Layout: organic, non-linear arrangement with visual hierarchy
+- Section boxes using #F5F6FA (light gray)
+- Icons: original illustrative line-art with uniform stroke weight, not generic stock icons; use 1-2 colors
+- Generous whitespace between sections
 - No decorative borders or frames around the entire image
 - All text must be in Japanese
 
@@ -75,12 +80,8 @@ Survey release production process:
 5. Distribution - Distribute via PRTIMES etc. for reach
 
 ## Key Visual Elements to Include
-- A flow from left to right showing the 5 steps
-- Lightbulb icon for theme ideation
-- Clipboard for survey execution
-- Bar chart for data analysis
-- Pen/document for writing
-- Megaphone or broadcast icon for distribution
-- Connecting arrows between each step
-- Small stick figure of a marketer guiding the process
+- A horizontal flow of 5 numbered boxes, one per step
+- Simple flat icon in each box: lightbulb, clipboard, bar chart, pen, megaphone
+- Straight arrows connecting each step left to right
+- Each box has a short label below the icon
 ```

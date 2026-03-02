@@ -23,7 +23,6 @@ Reuses the `nanobanana-image` skill's generation scripts.
 ## Prerequisites
 
 - `GEMINI_API_KEY` set in `.env.local`
-- `@google/genai` package installed (run `npm install --no-save @google/genai` if missing)
 
 ## Workflow
 

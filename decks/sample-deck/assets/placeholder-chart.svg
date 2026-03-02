@@ -5,11 +5,11 @@
   <line x1="80" y1="330" x2="740" y2="330" stroke="#F0F0F0" stroke-width="1" stroke-dasharray="4"/>
   <line x1="80" y1="240" x2="740" y2="240" stroke="#F0F0F0" stroke-width="1" stroke-dasharray="4"/>
   <line x1="80" y1="150" x2="740" y2="150" stroke="#F0F0F0" stroke-width="1" stroke-dasharray="4"/>
-  <rect x="120" y="280" width="60" height="140" rx="4" fill="#4A90D9"/>
-  <rect x="220" y="200" width="60" height="220" rx="4" fill="#4A90D9"/>
-  <rect x="320" y="150" width="60" height="270" rx="4" fill="#4A90D9"/>
-  <rect x="420" y="100" width="60" height="320" rx="4" fill="#50C878"/>
-  <rect x="520" y="120" width="60" height="300" rx="4" fill="#50C878"/>
-  <rect x="620" y="80" width="60" height="340" rx="4" fill="#50C878"/>
+  <rect x="120" y="280" width="60" height="140" rx="4" fill="#02001A"/>
+  <rect x="220" y="200" width="60" height="220" rx="4" fill="#02001A"/>
+  <rect x="320" y="150" width="60" height="270" rx="4" fill="#02001A"/>
+  <rect x="420" y="100" width="60" height="320" rx="4" fill="#E17120"/>
+  <rect x="520" y="120" width="60" height="300" rx="4" fill="#E17120"/>
+  <rect x="620" y="80" width="60" height="340" rx="4" fill="#E17120"/>
   <text x="400" y="470" text-anchor="middle" fill="#999" font-family="Inter, sans-serif" font-size="14">Monthly Revenue Growth</text>
 </svg>
