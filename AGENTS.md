@@ -1,3 +1,3 @@
 # AGENT.md
 
-このリポジトリで作業する際は、必ず `CLAUDE.md` を最初に読み込み、記載されたルールと規約に従うこと。
+When working in this repository, always read `CLAUDE.md` first and follow the rules and conventions described therein.
