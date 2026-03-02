@@ -2,7 +2,16 @@
   "name": "dexcode",
   "version": "0.1.0",
   "private": true,
+  "description": "AI-driven slide authoring tool built with Next.js and MDX",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/co-r-e/dexcode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/co-r-e/dexcode/issues"
+  },
+  "homepage": "https://co-r-e.github.io/dexcode-lp/",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

@@ -47,9 +47,9 @@ next-env.d.ts
 # test results
 /test-results/
 
-# nipry decks (keep sample-deck only)
+# decks (keep sample-deck only)
 /decks/*
 !/decks/sample-deck/
 
-# nipry exports
+# exports
 /output/
