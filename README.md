@@ -13,14 +13,16 @@ A slide presentation tool built with Next.js and MDX. Author your slides from th
 - **MDX slides** -- Write slides as individual `.mdx` files with full Markdown + JSX support
 - **16:9 widescreen** -- Slides render at a virtual 1920x1080 resolution and scale to fit any screen
 - **Multi-deck** -- Manage multiple slide decks in a single project under `decks/`
+- **12 slide types** -- cover, section, content, comparison, stats, timeline, image-left, image-right, image-full, quote, agenda, ending
 - **Presenter mode** -- Open a separate fullscreen window for projector output, synced in real-time via BroadcastChannel
 - **Keyboard navigation** -- Arrow keys, Space, Enter, Home, End; press `?` for shortcut help
 - **Slide URL sync** -- URL updates with `?slide=N` as you navigate; supports browser back/forward and direct links
 - **Speaker notes** -- Resizable notes panel with basic Markdown rendering (bold, italic, code, headings, lists); touch-friendly resize handle
-- **Configurable overlays** -- Logo, copyright text, and page numbers with flexible positioning
-- **Built-in components** -- Charts, icons, code blocks, tables, multi-column layouts, math equations, shapes, video embeds
-- **PDF export** -- Export decks to PDF via Playwright
+- **Configurable overlays** -- Logo, copyright text, page numbers, and accent lines with flexible positioning
+- **Built-in components** -- Charts, icons, code blocks, tables, multi-column layouts, math equations, shapes, cards, timelines, callouts, video embeds
+- **PDF / PPTX export** -- Export decks from the browser UI as PDF or PowerPoint files
 - **Tunnel sharing** -- Share your deck over the internet with a single click via Cloudflare Tunnel
+- **Slide transitions** -- Configurable per-slide or per-deck transitions (fade, slide, none)
 - **Security headers** -- X-Content-Type-Options, X-Frame-Options, Referrer-Policy applied to all routes
 - **Accessible** -- WCAG AA modal focus traps, aria-labels, focus-visible indicators
 - **CLI-first workflow** -- The web UI is view-only; slides are authored and edited from the terminal
@@ -56,10 +58,10 @@ nipry/
 ├── src/
 │   ├── app/                   # Next.js App Router pages
 │   ├── components/            # React components
+│   ├── contexts/              # React context providers
 │   ├── hooks/                 # Custom React hooks
 │   ├── lib/                   # Core utilities and loaders
-│   ├── types/                 # TypeScript type definitions
-│   └── scripts/               # CLI scripts (PDF export)
+│   └── types/                 # TypeScript type definitions
 ├── public/                    # Shared static assets
 ├── package.json
 ├── next.config.ts
@@ -102,14 +104,24 @@ export default defineConfig({
     colors: {
       primary: "#02001A",     // required -- headings, links, accents
       secondary: "#4A90D9",   // optional
+      accent: "#FF6B35",      // optional
       background: "#FFFFFF",  // optional (default: #FFFFFF)
       text: "#1a1a1a",        // optional (default: #1a1a1a)
+      textMuted: "#6b7280",   // optional -- subdued text
+      surface: "#f9fafb",     // optional -- card/box backgrounds
     },
     fonts: {
       heading: "Inter, sans-serif",
       body: "Noto Sans JP, sans-serif",
+      mono: "Fira Code, monospace", // optional -- code blocks
     },
   },
+  accentLine: {               // optional -- decorative side line
+    position: "left",         // left | right
+    width: 6,                 // pixels (default: 6)
+    gradient: "linear-gradient(to bottom, #02001A, #4A90D9)", // optional
+  },
+  transition: "fade",         // optional -- default transition for all slides (fade | slide | none)
 });
 ```
 
@@ -148,7 +160,9 @@ A subtitle or description goes here
 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
-| `type` | `"cover"` \| `"section"` \| `"content"` | `"content"` | Slide type |
+| `type` | `SlideType` | `"content"` | Slide type (see below) |
+| `transition` | `"fade"` \| `"slide"` \| `"none"` | -- | Override deck-level transition |
+| `verticalAlign` | `"top"` \| `"center"` | `"top"` | Vertical alignment of content |
 | `notes` | `string` | -- | Speaker notes (multi-line YAML) |
 | `background` | `string` | -- | Override slide background color |
 
@@ -157,12 +171,23 @@ A subtitle or description goes here
 - **`cover`** -- Title slides. Page number is hidden by default.
 - **`section`** -- Section divider slides.
 - **`content`** -- Standard content slides (default).
+- **`comparison`** -- Side-by-side comparison layout.
+- **`stats`** -- Key metrics / statistics display.
+- **`timeline`** -- Chronological event layout.
+- **`image-left`** -- Image on the left, text on the right.
+- **`image-right`** -- Image on the right, text on the left.
+- **`image-full`** -- Full-bleed image (no padding).
+- **`quote`** -- Blockquote-focused layout with extra padding.
+- **`agenda`** -- Agenda / table of contents layout.
+- **`ending`** -- Closing / thank-you slides.
 
 ## Built-in MDX Components
 
 All standard Markdown elements are styled for slide presentation (large fonts optimized for projection).
 
-### Columns
+### Layout
+
+#### Columns
 
 Side-by-side layout:
 
@@ -189,7 +214,106 @@ Optional props:
 - `<Columns gap="3rem">` -- Column gap (default: `"2rem"`)
 - `<Column width="40%">` -- Fixed column width
 
-### Chart
+#### Center
+
+Center content horizontally and vertically:
+
+```mdx
+<Center>
+
+# Centered heading
+
+</Center>
+```
+
+#### CardGrid
+
+Grid layout for cards:
+
+```mdx
+<CardGrid>
+  <Card title="Feature A">Description of feature A</Card>
+  <Card title="Feature B">Description of feature B</Card>
+  <Card title="Feature C">Description of feature C</Card>
+</CardGrid>
+```
+
+### Content
+
+#### Card / TaggedCard
+
+Content containers:
+
+```mdx
+<Card title="My Card">
+  Card body content here.
+</Card>
+
+<TaggedCard tag="NEW" title="Tagged Card">
+  Card with a colored tag label.
+</TaggedCard>
+```
+
+#### Stat
+
+Key metrics display:
+
+```mdx
+<Stat value="99.9%" label="Uptime" />
+```
+
+#### Badge
+
+Inline labels:
+
+```mdx
+<Badge>Beta</Badge>
+```
+
+#### Callout
+
+Highlighted information box:
+
+```mdx
+<Callout>
+  Important information goes here.
+</Callout>
+```
+
+#### Divider
+
+Horizontal separator:
+
+```mdx
+<Divider />
+```
+
+#### Timeline / TimelineItem
+
+Chronological events:
+
+```mdx
+<Timeline>
+  <TimelineItem title="2024" description="Project started" />
+  <TimelineItem title="2025" description="v1.0 released" />
+</Timeline>
+```
+
+#### Steps / Step
+
+Numbered process steps:
+
+```mdx
+<Steps>
+  <Step title="Install">Run npm install</Step>
+  <Step title="Configure">Edit deck.config.ts</Step>
+  <Step title="Create">Write MDX slides</Step>
+</Steps>
+```
+
+### Data & Media
+
+#### Chart
 
 Data visualization using Recharts:
 
@@ -213,7 +337,7 @@ Optional props:
 - `colors={["#02001A", "#4A90D9"]}` -- Custom color palette
 - `height={400}` -- Chart height in pixels (default: `400`)
 
-### Icon
+#### Icon
 
 Lucide icons:
 
@@ -224,7 +348,7 @@ Lucide icons:
 
 See all available icons at [lucide.dev/icons](https://lucide.dev/icons). Use kebab-case names (e.g., `file-text`, `arrow-right`).
 
-### Shape
+#### Shape
 
 SVG shapes:
 
@@ -236,7 +360,7 @@ SVG shapes:
 <Shape type="line" size={200} strokeWidth={3} />
 ```
 
-### Video
+#### Video
 
 Embedded video (YouTube, Vimeo, or local files):
 
@@ -340,21 +464,20 @@ Click the "Presenter Mode" button in the sidebar to open a separate fullscreen w
 - Navigate from either window -- both update in real-time
 - Press `f` to toggle fullscreen; press `Escape` to exit
 
-## PDF Export
+## Export
 
-Export a deck to PDF using Playwright:
+Export decks to PDF or PPTX directly from the browser. Click the export button on the deck listing page and choose your format. Each slide is captured as an image and assembled into the output file.
 
-```bash
-# Start the dev server first
-npm run dev
+- **PDF** -- Landscape 1920x1080, one slide per page
+- **PPTX** -- Widescreen layout, one slide per page
 
-# In another terminal
-npm run export -- my-presentation
-```
+## Tunnel Sharing
 
-This captures each slide as a screenshot and combines them into a PDF at `output/my-presentation.pdf`.
+Share your deck over the internet via Cloudflare Tunnel. Click the "Share" button in the sidebar to start a tunnel. A public URL is generated and copied to your clipboard.
 
-**Note:** Playwright must have Chromium installed. Run `npx playwright install chromium` if needed.
+- Only available when running on localhost
+- The tunnel stays active across page reloads
+- Click again to stop the tunnel
 
 ## Custom Components
 
@@ -377,7 +500,7 @@ Then use in any MDX file:
 
 ## Tech Stack
 
-- [Next.js 16](https://nextjs.org/) -- React framework with App Router and Turbopack
+- [Next.js 16](https://nextjs.org/) -- React 19 framework with App Router and Turbopack
 - [TypeScript](https://www.typescriptlang.org/) -- Type safety
 - Native CSS Variables & CSS Modules -- Strict encapsulation for slide styling
 - [Tailwind CSS 4](https://tailwindcss.com/) -- Dashboard and app UI styling
@@ -385,7 +508,10 @@ Then use in any MDX file:
 - [Recharts](https://recharts.org/) -- Charts and data visualization
 - [Lucide](https://lucide.dev/) -- Icon library
 - [KaTeX](https://katex.org/) -- Math equation rendering
-- [Playwright](https://playwright.dev/) -- PDF export
+- [html-to-image](https://github.com/bubkoo/html-to-image) -- Slide capture for export
+- [jsPDF](https://github.com/parallax/jsPDF) -- PDF generation
+- [pptxgenjs](https://github.com/gitbrent/PptxGenJS) -- PPTX generation
+- [cloudflared](https://github.com/nicksrandall/cloudflared) -- Cloudflare Tunnel for sharing
 - [gray-matter](https://github.com/jonschlinkert/gray-matter) -- YAML frontmatter parsing
 - [jiti](https://github.com/unjs/jiti) -- Runtime TypeScript config loading
 
@@ -397,7 +523,6 @@ Then use in any MDX file:
 | `npm run build` | Build for production |
 | `npm run start` | Start production server |
 | `npm run lint` | Run ESLint |
-| `npm run export -- <deck>` | Export a deck to PDF |
 
 ## License
 
